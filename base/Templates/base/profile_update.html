@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Your Profile</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+        }
+        .container {
+            margin-top: 100px;
+            max-width: 600px; /* Set a max width for the profile update form */
+            padding: 20px;
+            background: white; /* White background for the form */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+        h2 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Space below heading */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Your Profile</h2>
+        <form method="post">
+            {% csrf_token %}  <!-- CSRF token for security -->
+            {{ profile_form.as_p }}  <!-- Render profile form fields -->
+            <button type="submit" class="btn btn-primary btn-block">Save Changes</button> <!-- Submit button -->
+        </form>
+    </div>
+
+</body>
+</html>

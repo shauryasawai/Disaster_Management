@@ -29,3 +29,29 @@ class NaturalDisaster(models.Model):
 
     def __str__(self):
         return f'{self.disaster_type} near {self.latitude}, {self.longitude}'
+
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    # Link to Django's built-in User model
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    # Personal information
+    age = models.IntegerField(null=True, blank=True)
+    blood_group = models.CharField(max_length=3, choices=[
+        ('A+', 'A+'), ('A-', 'A-'), ('B+', 'B+'), ('B-', 'B-'),
+        ('AB+', 'AB+'), ('AB-', 'AB-'), ('O+', 'O+'), ('O-', 'O-')
+    ], blank=True)
+    height = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Height in cm
+    weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Weight in kg
+
+    # Health information
+    allergies = models.TextField(blank=True, null=True)  # Any allergies the user may have
+    injuries = models.TextField(blank=True, null=True)  # Past injuries or operations
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+
+# Optionally, signal to create or update UserProfile when User is created

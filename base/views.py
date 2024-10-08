@@ -1,9 +1,20 @@
 import requests
 from django.shortcuts import render
 from django.conf import settings
-from .models import Location, SatelliteImage
+from .models import Location, SatelliteImage, UserProfile
 import os
 from dotenv import load_dotenv
+from django.shortcuts import render, redirect
+from .forms import UserForm, UserProfileForm
+from django.contrib.auth.decorators import login_required
+import requests
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import geopy.distance
+from django.shortcuts import render, redirect
+from .forms import UserRegistrationForm, UserProfileForm
+from django.contrib.auth import login
+
 load_dotenv()
 API_KEY = os.getenv('POSITIONSTACK_API_KEY')
 # Your API key from PositionStack
@@ -45,11 +56,57 @@ def save_location(request):
     # If no POST data, just render the home page without location
     return render(request, 'base/home.html')
 
+def profile_view(request):
+    user = request.user.userprofile  
+    return render(request, 'base/profile.html', {'user': user})
 
-import requests
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import geopy.distance
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, instance=request.user.userprofile)
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')  # Redirect to profile view after saving
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=request.user.userprofile)
+
+    return render(request, 'base/edit_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            UserProfile.objects.create(user=user)  # Create UserProfile after saving User
+            login(request, user)  # Log the user in after registration
+            return redirect('profile_update')  # Redirect to the profile update page
+    else:
+        user_form = UserRegistrationForm()
+
+    return render(request, 'base/register.html', {'user_form': user_form})
+
+def profile_update(request):
+    try:
+        user_profile = request.user.userprofile  
+    except UserProfile.DoesNotExist:
+        user_profile = None  
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST, instance=user_profile)  
+        if profile_form.is_valid():
+            profile_form.save()  
+            return redirect('profile') 
+    else:
+        profile_form = UserProfileForm(instance=user_profile)  # Prefill the form with existing profile details
+
+    return render(request, 'base/profile_update.html', {'profile_form': profile_form})
+
 
 # ReliefWeb API URL for disasters
 RELIEFWEB_API_URL = 'https://api.reliefweb.int/v1/disasters'
