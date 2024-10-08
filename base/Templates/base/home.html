@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Management</title>
+
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        .satellite-image {
+            max-width: 100%;
+            margin: 10px 0;
+        }
+        #coordinates {
+            margin: 15px 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            background-color: #eee;
+            padding: 10px;
+            font-size: 1.5rem;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+            margin: 15px 0;
+        }
+        
+        .icon-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        
+        .icon-item p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            color: #333;
+        }        
+    </style>
+
+    <!-- Leaflet.js library for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- jQuery for AJAX requests -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        let latitude = null;
+        let longitude = null;
+
+        // Automatically get the user's location when the page loads
+        window.onload = function() {
+            getLocation();
+        };
+
+        // Get the user's location using the browser's Geolocation API
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showMap, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Show the map and display the user's latitude, longitude, city, and state
+        function showMap(position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+
+            // Display the user's current location coordinates
+            document.getElementById('current-coordinates').innerHTML = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+            // Initialize the map and set view to the user's location
+            const map = L.map('map').setView([latitude, longitude], 13);
+
+            // Set map tiles from OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // Add a marker for the user's location
+            const marker = L.marker([latitude, longitude]).addTo(map);
+            marker.bindPopup("<b>Your Location</b><br>Lat: " + latitude + "<br>Lon: " + longitude).openPopup();
+
+            // Reverse geocoding to get city and state from coordinates
+            getCityState(latitude, longitude, 'city-state');
+        }
+
+        // Reverse geocoding to get city and state based on latitude and longitude
+        function getCityState(lat, lng, targetElementId) {
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10&addressdetails=1`;
+
+            $.getJSON(url, function(data) {
+                const city = data.address.city || data.address.town || data.address.village || "Unknown City";
+                const state = data.address.state || "Unknown State";
+                document.getElementById(targetElementId).innerHTML = `City: ${city}, State: ${state}`;
+            }).fail(function() {
+                document.getElementById(targetElementId).innerHTML = "Unable to retrieve city and state.";
+            });
+        }
+
+        // Function to submit the current location to the backend and redirect to calamity_result.html
+        function submitLocation() {
+            if (latitude && longitude) {
+                // Create a form and submit latitude and longitude
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = "{% url 'check_disaster' %}";  // This is the Django URL to process the location
+
+                // Add CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = 'csrfmiddlewaretoken';
+                csrfToken.value = '{{ csrf_token }}';
+                form.appendChild(csrfToken);
+
+                // Add latitude and longitude to the form
+                const latInput = document.createElement('input');
+                latInput.type = 'hidden';
+                latInput.name = 'latitude';
+                latInput.value = latitude;
+                form.appendChild(latInput);
+
+                const lngInput = document.createElement('input');
+                lngInput.type = 'hidden';
+                lngInput.name = 'longitude';
+                lngInput.value = longitude;
+                form.appendChild(lngInput);
+
+                // Submit the form
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                alert("Location not yet available.");
+            }
+        }
+
+        // Error handling for geolocation
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Disaster Management</h1>
+
+    <!-- Contacts Section -->
+    <div class="section">
+        <h2>Contacts</h2>
+        <div class="icon-container">
+            <a href="fire_rescue.html" class="icon-item">
+                <img src="fire.png" alt="Fire Rescue">
+                <p>Fire Rescue</p>
+            </a>
+            <a href="suwa_seriya.html" class="icon-item">
+                <img src="suwa_seriya.png" alt="Suwa Seriya">
+                <p>Suwa Seriya</p>
+            </a>
+            <a href="hospital.html" class="icon-item">
+                <img src="hospital.png" alt="Hospital">
+                <p>Hospital</p>
+            </a>
+            <a href="police.html" class="icon-item">
+                <img src="police.png" alt="Police">
+                <p>Police</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="section">
+        <h2>Services</h2>
+        <div class="icon-container">
+            <a href="crime_report.html" class="icon-item">
+                <img src="crime_report.png" alt="Crime Report">
+                <p>Crime Report</p>
+            </a>
+            <a href="wildlife_conservation.html" class="icon-item">
+                <img src="wildlife_conservation.png" alt="Wildlife Conservation">
+                <p>Wildlife Conservation</p>
+            </a>
+            <a href="hazard_alert.html" class="icon-item">
+                <img src="hazard_alert.png" alt="Hazard Alert">
+                <p>Hazard Alert</p>
+            </a>
+            <a href="disaster_recovery.html" class="icon-item">
+                <img src="disaster_recovery.png" alt="Disaster Recovery">
+                <p>Disaster Recovery</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Information Section -->
+    <div class="section">
+        <h2>Information</h2>
+        <div class="icon-container">
+            <a href="safety_tips.html" class="icon-item">
+                <img src="safety_tips.png" alt="Safety Tips">
+                <p>Safety Tips</p>
+            </a>
+            <a href="emergency_preparedness.html" class="icon-item">
+                <img src="emergency_preparedness.png" alt="Emergency Preparedness">
+                <p>Emergency Preparedness</p>
+            </a>
+            <a href="first_aid.html" class="icon-item">
+                <img src="first_aid.png" alt="First Aid Tips">
+                <p>First Aid Tips</p>
+            </a>
+            <a href="dmc.html" class="icon-item">
+                <img src="dmc.png" alt="DMC">
+                <p>DMC</p>
+            </a>
+        </div>
+    </div>
+</div>
+    <!-- Panic Button to check for calamities -->
+    <section id="panic-button-section">
+        <button onclick="submitLocation()">Panic Button</button>
+    </section>
+    <div class="container">
+
+    <!-- Coordinates and Location Info -->
+    <section id="coordinates">
+        <h3>Your Coordinates</h3>
+        <p id="current-coordinates">Latitude: Not available, Longitude: Not available</p>
+        <p id="city-state">City: Not available, State: Not available</p>
+    </section>
+
+    <!-- Map Display Section -->
+    <section id="location-section">
+        <div id="map"></div>
+    </section>
+</body>
+</html>

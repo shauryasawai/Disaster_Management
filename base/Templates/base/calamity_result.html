@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calamity Result</title>
+</head>
+<body>
+    <h1>Calamity Result</h1>
+
+    {% if is_under_calamity %}
+        <h2>Warning! Natural Calamity Detected</h2>
+        <p><strong>Disaster Type:</strong> {{ disaster_type }}</p>
+        <p><strong>Description:</strong> {{ description }}</p>
+    {% else %}
+        <h2>This Location is Safe</h2>
+        <p>There are currently no known calamities in your area.</p>
+    {% endif %}
+
+    
+</body>
+</html>

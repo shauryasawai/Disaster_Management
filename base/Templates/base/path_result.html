@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Result</title>
+    <style>
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .satellite-image {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Path Found</h1>
+    
+    <div class="image-container">
+        <!-- Display the image -->
+        <img id="satelliteImage" class="satellite-image" src="{{ image.image.url }}" alt="Satellite Image with Path">
+        <!-- Canvas to draw the path -->
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <ul>
+        {% for coordinate in path %}
+            <li>({{ coordinate.0 }}, {{ coordinate.1 }})</li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        // Get the image and canvas elements
+        const image = document.getElementById('satelliteImage');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        // Wait for the image to load
+        image.onload = function() {
+            // Set the canvas size to match the image size
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            // Coordinates for the path (from Django template variable)
+            const path = [
+                {% for coordinate in path %}
+                    [{{ coordinate.0 }}, {{ coordinate.1 }}],
+                {% endfor %}
+            ];
+
+            // Draw the path on the canvas
+            context.beginPath();
+            context.strokeStyle = 'red'; // Change to any color you want for the path
+            context.lineWidth = 2;
+
+            // Iterate over the path coordinates
+            path.forEach((coordinate, index) => {
+                const x = coordinate[0];
+                const y = coordinate[1];
+
+                // Move to the first coordinate or draw a line to the next one
+                if (index === 0) {
+                    context.moveTo(x, y); // Starting point
+                } else {
+                    context.lineTo(x, y); // Draw a line to the next point
+                }
+            });
+
+            // Finalize the drawing
+            context.stroke();
+        };
+    </script>
+</body>
+</html>
