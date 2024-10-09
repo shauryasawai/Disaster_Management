@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.conf import settings
 from .models import Location, SatelliteImage, UserProfile
 import os
+from django.contrib import messages
 from dotenv import load_dotenv
 from django.shortcuts import render, redirect
 from .forms import UserForm, UserProfileForm
@@ -13,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 import geopy.distance
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserProfileForm
-from django.contrib.auth import login
+from django.contrib.auth import login,authenticate
 
 load_dotenv()
 API_KEY = os.getenv('POSITIONSTACK_API_KEY')
@@ -56,6 +57,30 @@ def save_location(request):
     # If no POST data, just render the home page without location
     return render(request, 'base/home.html')
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        remember_me = request.POST.get('remember_me')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            if remember_me:
+                request.session.set_expiry(604800)
+            else:  
+                request.session.set_expiry(0)   
+            
+            login(request, user)  
+            request.session['username'] = username  
+            messages.success(request, 'Login successful.')
+            print("User authenticated:", user)
+            print("Session username after login:", request.session.get('username'))
+            
+            return redirect('home/') 
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'base/login.html')
+
 def profile_view(request):
     user = request.user.userprofile  
     return render(request, 'base/profile.html', {'user': user})
@@ -86,7 +111,7 @@ def register(request):
             user = user_form.save()
             UserProfile.objects.create(user=user)  # Create UserProfile after saving User
             login(request, user)  # Log the user in after registration
-            return redirect('profile_update')  # Redirect to the profile update page
+            return redirect('home')  
     else:
         user_form = UserRegistrationForm()
 
