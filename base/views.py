@@ -188,7 +188,31 @@ def disaster_status_view(request):
         return render(request, 'base/calamity_result.html', result)
 
     return render(request, 'disaster.html', {'error': 'Invalid request'})
+
+
+
+from django.shortcuts import render
+from .models import Incident
+
+from django.shortcuts import render
+from .models import Incident
+
+def report_incident(request):
+    message = ''
+    if request.method == 'POST':
+        description = request.POST.get('description')
+        media = request.FILES.get('media')
+        
+        # Save the incident report to the database
+        incident = Incident(description=description, media=media)
+        incident.save()
+        
+        message = 'Your report is shared successfully!'
     
+    return render(request, 'report_incident.html', {'message': message})
+
+ 
+   
 def fire_view(request):
     return render(request, 'base/fire_safety.html')
 

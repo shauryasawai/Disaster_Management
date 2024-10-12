@@ -113,18 +113,19 @@
             </ul>
         </section>
 
-        <section id="incident-reporting">
-            <h2>Incident Reporting</h2>
-            <form id="incident-form">
-                <label for="incident-description">Description:</label>
-                <textarea id="incident-description" placeholder="Describe the incident..." required></textarea>
-                
-                <label for="incident-media">Attach Photos/Videos:</label>
-                <input type="file" id="incident-media" accept="image/*,video/*" multiple>
-                
-                <button type="submit">Report Incident</button>
-            </form>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="incident-description">Description:</label>
+            <textarea id="incident-description" name="description" placeholder="Describe the incident..." required></textarea>
+            
+            <label for="incident-media">Attach Photos/Videos:</label>
+            <input type="file" id="incident-media" name="media" accept="image/*,video/*" multiple>
+            
+            <button type="submit">Report Incident</button>
+        </form>
         </section>
+        
 
         <section id="real-time-alerts">
             <h2>Real-Time Alerts</h2>

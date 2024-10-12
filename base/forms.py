@@ -53,3 +53,21 @@ class UserProfileForm(forms.ModelForm):
             'blood_group', 'height', 'weight', 
             'allergies_reactions', 'past_injuries_operations'
         ]
+
+from django import forms
+from .models import Incident
+
+class IncidentForm(forms.ModelForm):
+    class Meta:
+        model = Incident
+        fields = ['description', 'media']
+        widgets = {
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Describe the incident...',
+                'required': True,
+                'id': 'incident-description',
+                'rows': 5,
+                'cols': 40
+            }),
+            'media': forms.ClearableFileInput(attrs={'accept': 'image/*,video/*'})
+        }
