@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Management App - Police Section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #f9c74f;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #f9c74f;
+        }
+
+        section {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        button {
+            background-color: #f9c74f;
+            color: #121212;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffd60a;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+
+        .alert {
+            background-color: #ff4d4d;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        #map {
+            height: 200px;
+            background-color: #666;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .evacuation-routes ul {
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Police Section</h1>
+        </header>
+
+        <section id="emergency-contacts">
+            <h2>Emergency Contact Information</h2>
+            <ul>
+                <li><strong>Local Police Station:</strong> 123-456-7890</li>
+                <li><strong>Emergency Services:</strong> 911</li>
+            </ul>
+        </section>
+
+        <section id="incident-reporting">
+            <h2>Incident Reporting</h2>
+            <form id="incident-form">
+                <label for="incident-description">Description:</label>
+                <textarea id="incident-description" placeholder="Describe the incident..." required></textarea>
+                
+                <label for="incident-media">Attach Photos/Videos:</label>
+                <input type="file" id="incident-media" accept="image/*,video/*" multiple>
+                
+                <button type="submit">Report Incident</button>
+            </form>
+        </section>
+
+        <section id="real-time-alerts">
+            <h2>Real-Time Alerts</h2>
+            <div class="alert">
+                <p><strong>Alert:</strong> Flood warning in your area!</p>
+            </div>
+            <div class="alert">
+                <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
+            </div>
+        </section>
+
+        <section id="resource-locations">
+            <h2>Resource Locations</h2>
+            <div id="map">
+                <p>Map showing police stations, shelters, and safe zones will be displayed here.</p>
+            </div>
+            <div class="evacuation-routes">
+                <h3>Evacuation Routes</h3>
+                <ul>
+                    <li>Route 1: Main St to 5th Ave</li>
+                    <li>Route 2: 3rd Ave to Elm St</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

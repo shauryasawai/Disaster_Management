@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Profile Dashboard</h1>
+
+        {% comment %} <!-- Profile Information Form -->
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="update-btn">Update Profile</button>
+        </form> {% endcomment %}
+
+        <h2>Your Information</h2>
+        <ul>
+            <li><strong>Username:</strong> {{ profile.user.username }}</li>
+            <li><strong>Age:</strong> {{ profile.age }}</li>
+            <li><strong>Contact No:</strong> {{ profile.contact_no }}</li>
+            <li><strong>Emergency Contact No:</strong> {{ profile.emergency_contact_no }}</li>
+            <li><strong>Blood Group:</strong> {{ profile.blood_group }}</li>
+            <li><strong>Height:</strong> {{ profile.height }} cm</li>
+            <li><strong>Weight:</strong> {{ profile.weight }} kg</li>
+            <li><strong>Allergies/Reactions:</strong> {{ profile.allergies_reactions }}</li>
+            <li><strong>Past Injuries/Operations:</strong> {{ profile.past_injuries_operations }}</li>
+            <br>
+            <br>
+            <br>
+            <a href="{% url 'create_profile' %}" class="btn btn-primary">Edit Your Profile</a>
+        </ul>
+    </div>
+</body>
+</html>

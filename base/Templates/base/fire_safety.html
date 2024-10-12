@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire & Rescue Interactive Assistance</title>
+    <style>/* General Dark Theme */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #ff4500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        header p {
+            color: #f5f5f5;
+        }
+        
+        /* Content Section */
+        .do-dont-section {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        
+        .instructions {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            width: 45%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .instructions:hover {
+            transform: scale(1.05);
+        }
+        
+        .instructions h2 {
+            color: #ff4500;
+        }
+        
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .instructions ul li {
+            margin: 10px 0;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        .instructions ul li i {
+            color: #ff4500;
+            margin-right: 10px;
+        }
+        
+        /* Buttons Styling */
+        .extra-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            background-color: #ff4500;
+            color: #f5f5f5;
+            border: none;
+            padding: 15px 25px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #ff5733;
+        }
+        
+        /* Media Section */
+        .media {
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        }
+        
+        .video-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .tutorial-video {
+            width: 45%;
+            border: 3px solid #ff4500;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .tutorial-video:hover {
+            transform: scale(1.05);
+        }
+        
+        .images-container {
+            text-align: center;
+        }
+        
+        .safety-image {
+            width: 45%;
+            margin: 10px;
+            border-radius: 10px;
+            border: 2px solid #ff4500;
+            transition: transform 0.3s ease;
+        }
+        
+        .safety-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Quiz Section */
+        .quiz-section {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .quiz-btn {
+            background-color: #ff4500;
+            color: #f5f5f5;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .quiz-btn:hover {
+            background-color: #ff5733;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+        }
+        </style>
+</head>
+<body>
+    <header>
+        <h1>🔥 Fire & Rescue Interactive Assistance</h1>
+        <p>Your guide to staying safe in case of fire emergencies</p>
+    </header>
+
+    <section class="content">
+        <div class="do-dont-section">
+            <div class="instructions">
+                <h2>✅ What to Do During a Fire</h2>
+                <ul>
+                    <li><i class="fa fa-check"></i> Keep calm and quickly evacuate the building.</li>
+                    <li><i class="fa fa-check"></i> Use stairs, not elevators.</li>
+                    <li><i class="fa fa-check"></i> If trapped, block any smoke with wet cloths and signal for help.</li>
+                    <li><i class="fa fa-check"></i> Stop, drop, and roll if your clothes catch fire.</li>
+                    <li><i class="fa fa-check"></i> Call emergency services (dial 911).</li>
+                </ul>
+            </div>
+
+            <div class="instructions">
+                <h2>❌ What Not to Do During a Fire</h2>
+                <ul>
+                    <li><i class="fa fa-times"></i> Don’t use elevators during a fire.</li>
+                    <li><i class="fa fa-times"></i> Don’t open doors that are hot to the touch.</li>
+                    <li><i class="fa fa-times"></i> Don’t break windows unless absolutely necessary.</li>
+                    <li><i class="fa fa-times"></i> Don’t go back inside for personal belongings.</li>
+                    <li><i class="fa fa-times"></i> Don’t panic – follow the evacuation plan.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="extra-buttons">
+            <button class="btn" onclick="alert('Emergency contacts: Dial 911 or your local fire department')">📞 Emergency Contacts</button>
+            <button class="btn" onclick="downloadChecklist()">📋 Download Fire Safety Checklist</button>
+        </div>
+    </section>
+
+    <section class="media">
+        <h2>📺 Fire Safety Tutorial Videos</h2>
+        <div class="video-container">
+            <video class="tutorial-video" autoplay loop muted controls>
+                <source src="fire_safety1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="tutorial-video" autoplay loop muted controls>
+                <source src="fire_safety2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="images-container">
+            <h2>📷 Fire Safety Images</h2>
+            <img src="fire_escape_plan.jpg" alt="Fire Escape Plan" class="safety-image">
+            <img src="fire_safety_tips.jpg" alt="Fire Safety Tips" class="safety-image">
+        </div>
+    </section>
+
+    <section class="quiz-section">
+        <h2>📝 Test Your Knowledge: Fire Safety Quiz</h2>
+        <button class="quiz-btn" onclick="startQuiz()">Start Quiz</button>
+        <div id="quiz" class="quiz-container"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Fire and Rescue Assistance | Stay safe and informed.</p>
+    </footer>
+
+    <script>function downloadChecklist() {
+        alert('Downloading Fire Safety Checklist...');
+        // Trigger file download (You can link to your actual file)
+        window.open('base/Templates/base/firesafetychecklist.pdf');
+    }
+    
+    function startQuiz() {
+        const quizDiv = document.getElementById('quiz');
+        quizDiv.innerHTML = `
+            <h3>What should you do if your clothes catch fire?</h3>
+            <button onclick="quizAnswer('correct')">Stop, Drop, and Roll</button>
+            <button onclick="quizAnswer('wrong')">Run to a water source</button>
+            <button onclick="quizAnswer('wrong')">Remove the clothes</button>
+        `;
+    }
+    
+    function quizAnswer(answer) {
+        if (answer === 'correct') {
+            alert('Correct! You should Stop, Drop, and Roll.');
+        } else {
+            alert('Incorrect! The right answer is to Stop, Drop, and Roll.');
+        }
+    }
+    </script>
+</body>
+</html>
