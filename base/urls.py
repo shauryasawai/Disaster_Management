@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .views import disaster_status_view
 from .views import fire_view,hospital
+from .views import report_incident
+
 
 urlpatterns = [
     path('', views.login_view , name='login'),
@@ -13,5 +15,5 @@ urlpatterns = [
     path('profile/create/', views.create_profile, name='create_profile'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('hospital/', views.hospital, name='hospital'),
-    path('police/', views.police, name='police'),
+    path('report/', report_incident, name='report_incident'),
 ]

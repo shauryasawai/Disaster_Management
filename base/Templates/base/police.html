@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disaster Management App - Police Section</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <style>
         * {
             margin: 0;
@@ -83,19 +84,19 @@
         }
 
         #map {
-            height: 200px;
+            height: 400px;
             background-color: #666;
             border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
+            margin-bottom: 20px;
         }
 
         .evacuation-routes ul {
             background-color: #444;
             padding: 10px;
             border-radius: 5px;
+        }
+        .submit{
+            margin-left: 40%;
         }
     </style>
 </head>
@@ -108,30 +109,41 @@
         <section id="emergency-contacts">
             <h2>Emergency Contact Information</h2>
             <ul>
+                <br>
                 <li><strong>Local Police Station:</strong> 123-456-7890</li>
-                <li><strong>Emergency Services:</strong> 911</li>
+                <br>
+                <li><strong>Emergency Services:</strong> 112</li>
+                <br>
             </ul>
         </section>
 
-
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label for="incident-description">Description:</label>
-            <textarea id="incident-description" name="description" placeholder="Describe the incident..." required></textarea>
-            
-            <label for="incident-media">Attach Photos/Videos:</label>
-            <input type="file" id="incident-media" name="media" accept="image/*,video/*" multiple>
-            
-            <button type="submit">Report Incident</button>
-        </form>
+        <section id="incident-reporting">
+            <br>
+            <h2>Incident Reporting</h2>
+            <br>
+            <form id="incident-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <button type="submit" class='submit'>Report Incident</button>
+            </form>
         </section>
-        
 
         <section id="real-time-alerts">
             <h2>Real-Time Alerts</h2>
+            <br>
             <div class="alert">
                 <p><strong>Alert:</strong> Flood warning in your area!</p>
             </div>
+            <br>
+            <div class="alert">
+                <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
+            </div>
+            <br>
+            <div class="alert">
+                <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
+            </div>
+            <br>
             <div class="alert">
                 <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
             </div>
@@ -139,17 +151,67 @@
 
         <section id="resource-locations">
             <h2>Resource Locations</h2>
-            <div id="map">
-                <p>Map showing police stations, shelters, and safe zones will be displayed here.</p>
-            </div>
+            <div id="map"></div>
             <div class="evacuation-routes">
-                <h3>Evacuation Routes</h3>
-                <ul>
-                    <li>Route 1: Main St to 5th Ave</li>
-                    <li>Route 2: 3rd Ave to Elm St</li>
-                </ul>
             </div>
         </section>
     </div>
+
+    <!-- Leaflet.js Library -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize the map and set the center and zoom level to India
+        var map = L.map('map').setView([20.5937, 78.9629], 5); // Centering on India
+
+        // Add the OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Police stations data (example)
+        var policeStations = [
+            { lat: 28.6139, lng: 77.2090, title: "Delhi Police HQ" },  // Delhi
+            { lat: 19.0760, lng: 72.8777, title: "Mumbai Police Station" },  // Mumbai
+            { lat: 12.9716, lng: 77.5946, title: "Bangalore Police Station" },  // Bangalore
+            { lat: 13.0827, lng: 80.2707, title: "Chennai Police Station" }  // Chennai
+        ];
+
+        // Shelters data (example)
+        var shelters = [
+            { lat: 26.9124, lng: 75.7873, title: "Shelter in Jaipur" },  // Jaipur
+            { lat: 17.3850, lng: 78.4867, title: "Shelter in Hyderabad" }  // Hyderabad
+        ];
+
+        // India's geographical bounds (approximately)
+        var indiaBounds = {
+            latMin: 8.0,
+            latMax: 37.6,
+            lngMin: 68.7,
+            lngMax: 97.25
+        };
+
+        // Function to check if the location is within India
+        function isWithinIndia(lat, lng) {
+            return lat >= indiaBounds.latMin && lat <= indiaBounds.latMax && lng >= indiaBounds.lngMin && lng <= indiaBounds.lngMax;
+        }
+
+        // Add police station markers only if they are within India
+        policeStations.forEach(function(station) {
+            if (isWithinIndia(station.lat, station.lng)) {
+                L.marker([station.lat, station.lng]).addTo(map)
+                    .bindPopup(`<b>${station.title}</b><br>Police Station`);
+            }
+        });
+
+        // Add shelter markers only if they are within India
+        shelters.forEach(function(shelter) {
+            if (isWithinIndia(shelter.lat, shelter.lng)) {
+                L.marker([shelter.lat, shelter.lng]).addTo(map)
+                    .bindPopup(`<b>${shelter.title}</b><br>Safe Shelter`);
+            }
+        });
+    </script>
 </body>
 </html>

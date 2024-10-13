@@ -190,26 +190,21 @@ def disaster_status_view(request):
     return render(request, 'disaster.html', {'error': 'Invalid request'})
 
 
-
-from django.shortcuts import render
-from .models import Incident
-
-from django.shortcuts import render
-from .models import Incident
+# police/views.py
+from django.shortcuts import render, redirect
+from .forms import IncidentReportForm
 
 def report_incident(request):
-    message = ''
     if request.method == 'POST':
-        description = request.POST.get('description')
-        media = request.FILES.get('media')
-        
-        # Save the incident report to the database
-        incident = Incident(description=description, media=media)
-        incident.save()
-        
-        message = 'Your report is shared successfully!'
+        form = IncidentReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('report_incident')  # Redirect to the same page after submission
+    else:
+        form = IncidentReportForm()
     
-    return render(request, 'report_incident.html', {'message': message})
+    return render(request, 'base/police.html', {'form': form})
+
 
  
    

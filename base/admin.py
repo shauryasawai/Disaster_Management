@@ -1,7 +1,6 @@
 
 from django.contrib import admin
 from .models import Location
-from .models import Incident
 
 # Register the Location model
 @admin.register(Location)
@@ -19,11 +18,16 @@ from .models import UserProfile
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'age', 'blood_group', 'height', 'weight')
 
+# police/admin.py
 from django.contrib import admin
-from .models import Incident
+# police/admin.py
+from django.contrib import admin
+from .models import IncidentReport
 
-class IncidentAdmin(admin.ModelAdmin):
-    list_display = ('description', 'created_at')  # Make sure to include fields you want to display
+class IncidentReportAdmin(admin.ModelAdmin):
+    list_display = ('description', 'timestamp', 'media')
+    search_fields = ('description',)
+    list_filter = ('timestamp',)
 
-admin.site.register(Incident, IncidentAdmin)
+admin.site.register(IncidentReport, IncidentReportAdmin)
 
