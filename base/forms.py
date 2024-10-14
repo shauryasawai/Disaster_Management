@@ -24,23 +24,26 @@ class UserForm(forms.ModelForm):
         }
 
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from django.contrib.auth.models import User
 
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}),
-        }
-        
+    
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        # Customize labels
+        self.fields['password2'].label = 'Confirm Password'
+        # Optionally customize other attributes
+        self.fields['password1'].label = 'Password'
+        # Remove help texts and labels
+        for field_name, field in self.fields.items():
+            field.help_text = None  # Remove help text
+            field.label = ''  # Optionally remove labels
+            field.widget.attrs.update({'placeholder': field_name.capitalize()})  # Add placeholders if needed
+
         
 from django import forms
 from .models import UserProfile

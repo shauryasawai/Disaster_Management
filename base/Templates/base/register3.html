@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+        }
+        .container {
+            margin-top: 100px;
+            max-width: 400px; /* Set a max width for the registration form */
+            padding: 20px;
+            background: white; /* White background for the form */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+        h2 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Space below heading */
+        }
+        .form-control {
+            margin-bottom: 15px; /* Space between form controls */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}  <!-- CSRF token for security -->
+            {{ user_form.as_p }}  <!-- Render form fields -->
+            <button type="submit" class="btn btn-primary btn-block">Register</button> <!-- Submit button -->
+        </form>
+        <div class="text-center mt-3">
+            {% comment %} <a href="{% url 'login' %}">Already have an account? Log in here.</a>  <!-- Link to login page --> {% endcomment %}
+        </div>
+    </div>
+
+</body>
+</html>
+
