@@ -1,217 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Disaster Management App - Police Section</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+        line-height: 1.6;
+      }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
+      .container {
+        max-width: 1000px; /* Increased max-width for better use of space */
+        margin: auto;
+        padding: 20px;
+      }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+      header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-        h1 {
-            color: #f9c74f;
-        }
+      h1 {
+        color: #f9c74f;
+        font-size: 2.5em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
 
-        h2 {
-            margin-top: 20px;
-            color: #f9c74f;
-        }
+      h2 {
+        color: #f9c74f;
+        margin-top: 20px;
+        font-size: 1.8em;
+        border-bottom: 2px solid #f9c74f;
+        padding-bottom: 5px;
+      }
 
-        section {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
+      section {
+        background-color: #1e1e1e;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-        ul {
-            list-style-type: none;
-        }
+      section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+      }
 
-        button {
-            background-color: #f9c74f;
-            color: #121212;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      ul {
+        list-style-type: none;
+        padding-left: 20px;
+      }
 
-        button:hover {
-            background-color: #ffd60a;
-        }
+      li {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
 
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #666;
-            border-radius: 5px;
-            background-color: #333;
-            color: #fff;
-            margin-bottom: 10px;
-        }
+      button {
+        background-color: #f9c74f;
+        color: #121212;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+      }
 
-        input[type="file"] {
-            margin-top: 10px;
-        }
+      button:hover {
+        background-color: #ffd60a;
+      }
 
-        .alert {
-            background-color: #ff4d4d;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
+      textarea,
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #666;
+        border-radius: 8px;
+        background-color: #2c2c2c;
+        color: #fff;
+        font-size: 1em;
+        transition: border-color 0.3s ease;
+      }
 
-        #map {
-            height: 400px;
-            background-color: #666;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
+      textarea:focus,
+      input[type="file"]:focus {
+        border-color: #f9c74f;
+      }
 
-        .evacuation-routes ul {
-            background-color: #444;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .submit{
-            margin-left: 40%;
-        }
+      .alert {
+        background-color: #ff4d4d;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .alert strong {
+        font-weight: bold;
+        color: #fff;
+      }
+
+      #map {
+        height: 400px;
+        background-color: #666;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      .evacuation-routes ul {
+        background-color: #444;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        font-size: 1.1em;
+      }
+
+      .submit {
+        margin: 20px auto;
+        display: block;
+        background-color: #f9c74f;
+        color: #121212;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: transform 0.3s ease;
+      }
+
+      .submit:hover {
+        transform: translateY(-3px);
+        background-color: #ffd60a;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Police Section</h1>
-        </header>
+      <header>
+        <h1>Police Section</h1>
+      </header>
 
-        <section id="emergency-contacts">
-            <h2>Emergency Contact Information</h2>
-            <ul>
-                <br>
-                <li><strong>Local Police Station:</strong> 123-456-7890</li>
-                <br>
-                <li><strong>Emergency Services:</strong> 112</li>
-                <br>
-            </ul>
-        </section>
+      <section id="emergency-contacts">
+        <h2>Emergency Contact Information</h2>
+        <ul>
+          <br />
+          <li><strong>Local Police Station:</strong> 123-456-7890</li>
+          <br />
+          <li><strong>Emergency Services:</strong> 112</li>
+          <br />
+        </ul>
+      </section>
 
-        <section id="incident-reporting">
-            <br>
-            <h2>Incident Reporting</h2>
-            <br>
-            <form id="incident-form" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <br>
-                <button type="submit" class='submit'>Report Incident</button>
-            </form>
-        </section>
+      <section id="incident-reporting">
+        <br />
+        <h2>Incident Reporting</h2>
+        <br />
+        <form id="incident-form" method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{ form.as_p }}
+          <br />
+          <button type="submit" class="submit">Report Incident</button>
+        </form>
+      </section>
 
-        <section id="real-time-alerts">
-            <h2>Real-Time Alerts</h2>
-            <br>
-            <div class="alert">
-                <p><strong>Alert:</strong> Flood warning in your area!</p>
-            </div>
-            <br>
-            <div class="alert">
-                <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
-            </div>
-            <br>
-            <div class="alert">
-                <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
-            </div>
-            <br>
-            <div class="alert">
-                <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
-            </div>
-        </section>
+      <section id="real-time-alerts">
+        <h2>Real-Time Alerts</h2>
+        <br />
+        <div class="alert">
+          <p><strong>Alert:</strong> Flood warning in your area!</p>
+        </div>
+        <br />
+        <div class="alert">
+          <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
+        </div>
+        <br />
+        <div class="alert">
+          <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
+        </div>
+        <br />
+        <div class="alert">
+          <p><strong>Alert:</strong> Suspicious activity reported nearby!</p>
+        </div>
+      </section>
 
-        <section id="resource-locations">
-            <h2>Resource Locations</h2>
-            <div id="map"></div>
-            <div class="evacuation-routes">
-            </div>
-        </section>
+      <section id="resource-locations">
+        <h2>Resource Locations</h2>
+        <div id="map"></div>
+        <div class="evacuation-routes"></div>
+      </section>
     </div>
 
     <!-- Leaflet.js Library -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
     <script>
-        // Initialize the map and set the center and zoom level to India
-        var map = L.map('map').setView([20.5937, 78.9629], 5); // Centering on India
+      // Initialize the map and set the center and zoom level to India
+      var map = L.map("map").setView([20.5937, 78.9629], 5); // Centering on India
 
-        // Add the OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+      // Add the OpenStreetMap tiles
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
 
-        // Police stations data (example)
-        var policeStations = [
-            { lat: 28.6139, lng: 77.2090, title: "Delhi Police HQ" },  // Delhi
-            { lat: 19.0760, lng: 72.8777, title: "Mumbai Police Station" },  // Mumbai
-            { lat: 12.9716, lng: 77.5946, title: "Bangalore Police Station" },  // Bangalore
-            { lat: 13.0827, lng: 80.2707, title: "Chennai Police Station" }  // Chennai
-        ];
+      // Police stations data (example)
+      var policeStations = [
+        { lat: 28.6139, lng: 77.209, title: "Delhi Police HQ" }, // Delhi
+        { lat: 19.076, lng: 72.8777, title: "Mumbai Police Station" }, // Mumbai
+        { lat: 12.9716, lng: 77.5946, title: "Bangalore Police Station" }, // Bangalore
+        { lat: 13.0827, lng: 80.2707, title: "Chennai Police Station" }, // Chennai
+      ];
 
-        // Shelters data (example)
-        var shelters = [
-            { lat: 26.9124, lng: 75.7873, title: "Shelter in Jaipur" },  // Jaipur
-            { lat: 17.3850, lng: 78.4867, title: "Shelter in Hyderabad" }  // Hyderabad
-        ];
+      // Shelters data (example)
+      var shelters = [
+        { lat: 26.9124, lng: 75.7873, title: "Shelter in Jaipur" }, // Jaipur
+        { lat: 17.385, lng: 78.4867, title: "Shelter in Hyderabad" }, // Hyderabad
+      ];
 
-        // India's geographical bounds (approximately)
-        var indiaBounds = {
-            latMin: 8.0,
-            latMax: 37.6,
-            lngMin: 68.7,
-            lngMax: 97.25
-        };
+      // India's geographical bounds (approximately)
+      var indiaBounds = {
+        latMin: 8.0,
+        latMax: 37.6,
+        lngMin: 68.7,
+        lngMax: 97.25,
+      };
 
-        // Function to check if the location is within India
-        function isWithinIndia(lat, lng) {
-            return lat >= indiaBounds.latMin && lat <= indiaBounds.latMax && lng >= indiaBounds.lngMin && lng <= indiaBounds.lngMax;
+      // Function to check if the location is within India
+      function isWithinIndia(lat, lng) {
+        return (
+          lat >= indiaBounds.latMin &&
+          lat <= indiaBounds.latMax &&
+          lng >= indiaBounds.lngMin &&
+          lng <= indiaBounds.lngMax
+        );
+      }
+
+      // Add police station markers only if they are within India
+      policeStations.forEach(function (station) {
+        if (isWithinIndia(station.lat, station.lng)) {
+          L.marker([station.lat, station.lng])
+            .addTo(map)
+            .bindPopup(`<b>${station.title}</b><br>Police Station`);
         }
+      });
 
-        // Add police station markers only if they are within India
-        policeStations.forEach(function(station) {
-            if (isWithinIndia(station.lat, station.lng)) {
-                L.marker([station.lat, station.lng]).addTo(map)
-                    .bindPopup(`<b>${station.title}</b><br>Police Station`);
-            }
-        });
-
-        // Add shelter markers only if they are within India
-        shelters.forEach(function(shelter) {
-            if (isWithinIndia(shelter.lat, shelter.lng)) {
-                L.marker([shelter.lat, shelter.lng]).addTo(map)
-                    .bindPopup(`<b>${shelter.title}</b><br>Safe Shelter`);
-            }
-        });
+      // Add shelter markers only if they are within India
+      shelters.forEach(function (shelter) {
+        if (isWithinIndia(shelter.lat, shelter.lng)) {
+          L.marker([shelter.lat, shelter.lng])
+            .addTo(map)
+            .bindPopup(`<b>${shelter.title}</b><br>Safe Shelter`);
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
