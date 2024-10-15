@@ -1,140 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nearby Hospitals in Odisha</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1e1e1e;
+        color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
 
-        h1 {
-            text-align: center;
-            color: #ff6f61;
-        }
+      h1 {
+        font-weight: bold;
+        font-size: 50px;
+        text-align: center;
+        color: #16bd3f;
+        margin-bottom: 20px;
+      }
 
-        .hospital-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+      .hospital-list {
+        display: flex;
+        flex-wrap: wrap; /* Allows wrapping to next row if there's not enough space */
+        justify-content: space-between; /* Adds space between the cards */
+        gap: 20px; /* Spacing between the cards */
+      }
 
-        .hospital-card {
-            background-color: #2e2e2e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-        }
+      .hospital-card {
+        background-color: #2e2e2e;
+        width: 350px; /* Fixed width */
+        height: 400px; /* Fixed height */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column; /* Ensures content stacks vertically */
+        justify-content: space-between; /* Evenly spaces content within the card */
+      }
 
-        .hospital-name {
-            font-size: 1.5em;
-            color: #ff6f61;
-        }
+      .hospital-name {
+        font-size: 1.5em;
+        color: #ff6f61;
+      }
 
-        .hospital-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+      .hospital-details {
+        display: flex;
+        flex-direction: column; /* Stack details vertically */
+        gap: 10px;
+      }
 
-        .detail-item {
-            flex: 1;
-            padding: 10px;
-            background-color: #3e3e3e;
-            border-radius: 5px;
-            color: #f0f0f0;
-        }
+      .detail-item {
+        background-color: #3e3e3e;
+        border-radius: 5px;
+        color: #f0f0f0;
+        padding: 10px;
+        text-align: center; /* Center text within each detail */
+      }
 
-        .action-button {
-            display: inline-block;
-            background-color: #ff6f61;
-            color: #f0f0f0;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+      .action-button {
+        display: inline-block;
+        background-color: #ff6f61;
+        color: #f0f0f0;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        text-align: center;
+      }
 
-        .action-button:hover {
-            background-color: #ff4f41;
-        }
+      .action-button:hover {
+        background-color: #ff4f41;
+      }
 
-        .loading {
-            text-align: center;
-            font-size: 1.2em;
-            color: #ff6f61;
-        }
+      .loading {
+        text-align: center;
+        font-size: 1.2em;
+        color: #ff6f61;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
+    <h1>Hospitals Near You</h1>
     <div class="container">
-        <h1>Hospitals Near You</h1>
-        <div id="loading" class="loading">Loading hospitals Near You...</div>
-        <div class="hospital-list" id="hospitalList"></div>
+      <div id="loading" class="loading">Loading hospitals Near You...</div>
+      <div class="hospital-list" id="hospitalList"></div>
     </div>
 
-    <script>if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showNearbyHospitals, handleError);
-} else {
-    alert("Geolocation is not supported by this browser.");
-}
+    <script>
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          showNearbyHospitals,
+          handleError
+        );
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
 
-function showNearbyHospitals(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+      function showNearbyHospitals(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
 
-    // Use Nominatim API and limit the search to India using countrycodes=IN
-    const url = `https://nominatim.openstreetmap.org/search?format=json&amenity=hospital&limit=10&lat=${lat}&lon=${lon}&countrycodes=IN`;
+        // Use Nominatim API and limit the search to India using countrycodes=IN
+        const url = `https://nominatim.openstreetmap.org/search?format=json&amenity=hospital&limit=10&lat=${lat}&lon=${lon}&countrycodes=IN`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => displayHospitals(data, lat, lon))
-        .catch(error => {
-            document.getElementById('loading').innerText = 'Error fetching hospital data.';
-            console.error('Error:', error);
-        });
-}
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => displayHospitals(data, lat, lon))
+          .catch((error) => {
+            document.getElementById("loading").innerText =
+              "Error fetching hospital data.";
+            console.error("Error:", error);
+          });
+      }
 
-function displayHospitals(hospitals, lat, lon) {
-    const hospitalList = document.getElementById('hospitalList');
-    const loading = document.getElementById('loading');
-    loading.style.display = 'none';
+      function displayHospitals(hospitals, lat, lon) {
+        const hospitalList = document.getElementById("hospitalList");
+        const loading = document.getElementById("loading");
+        loading.style.display = "none";
 
-    if (hospitals.length > 0) {
-        hospitals.forEach(hospital => {
-            const hospitalCard = document.createElement('div');
-            hospitalCard.classList.add('hospital-card');
+        if (hospitals.length > 0) {
+          hospitals.forEach((hospital) => {
+            const hospitalCard = document.createElement("div");
+            hospitalCard.classList.add("hospital-card");
 
-            const hospitalName = document.createElement('div');
-            hospitalName.classList.add('hospital-name');
+            const hospitalName = document.createElement("div");
+            hospitalName.classList.add("hospital-name");
             hospitalName.innerText = hospital.display_name;
 
-            const hospitalDetails = document.createElement('div');
-            hospitalDetails.classList.add('hospital-details');
+            const hospitalDetails = document.createElement("div");
+            hospitalDetails.classList.add("hospital-details");
 
-            const distance = document.createElement('div');
-            distance.classList.add('detail-item');
-            distance.innerText = `Distance: ${calculateDistance(lat, lon, hospital.lat, hospital.lon)} km`;
+            const distance = document.createElement("div");
+            distance.classList.add("detail-item");
+            distance.innerText = `Distance: ${calculateDistance(
+              lat,
+              lon,
+              hospital.lat,
+              hospital.lon
+            )} km`;
 
             hospitalDetails.appendChild(distance);
 
-            const actionButtons = document.createElement('div');
-            const directionsButton = document.createElement('a');
+            const actionButtons = document.createElement("div");
+            const directionsButton = document.createElement("a");
             directionsButton.href = `https://www.openstreetmap.org/directions?engine=osrm_car&route=${lat},${lon};${hospital.lat},${hospital.lon}`;
-            directionsButton.classList.add('action-button');
-            directionsButton.innerText = 'Get Directions';
+            directionsButton.classList.add("action-button");
+            directionsButton.innerText = "Get Directions";
 
             actionButtons.appendChild(directionsButton);
 
@@ -143,33 +162,35 @@ function displayHospitals(hospitals, lat, lon) {
             hospitalCard.appendChild(actionButtons);
 
             hospitalList.appendChild(hospitalCard);
-        });
-    } else {
-        hospitalList.innerHTML = '<p>No hospitals found in your area.</p>';
-    }
-}
+          });
+        } else {
+          hospitalList.innerHTML = "<p>No hospitals found in your area.</p>";
+        }
+      }
 
-function handleError(error) {
-    document.getElementById('loading').innerText = 'Unable to retrieve your location.';
-}
+      function handleError(error) {
+        document.getElementById("loading").innerText =
+          "Unable to retrieve your location.";
+      }
 
-function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radius of the earth in km
-    const dLat = deg2rad(lat2 - lat1);
-    const dLon = deg2rad(lon2 - lon1);
-    const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c; // Distance in km
-    return distance.toFixed(2);
-}
+      function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the earth in km
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in km
+        return distance.toFixed(2);
+      }
 
-function deg2rad(deg) {
-    return deg * (Math.PI / 180);
-}
-</script>
-
-</body>
+      function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+      }
+    </script>
+  </body>
 </html>
