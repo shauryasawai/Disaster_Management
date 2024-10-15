@@ -49,4 +49,26 @@ class IncidentReport(models.Model):
 
     def __str__(self):
         return self.description[:50]
+    
+# models.py
+from django.db import models
+
+class CrimeReport(models.Model):
+    CRIME_TYPES = [
+        ('theft', 'Theft'),
+        ('vandalism', 'Vandalism'),
+        ('violence', 'Violence'),
+        ('cybercrime', 'Cybercrime'),
+    ]
+    
+    crime_type = models.CharField(max_length=20, choices=CRIME_TYPES)
+    description = models.TextField()
+    location = models.CharField(max_length=255)
+    media = models.FileField(upload_to='crime_reports/', blank=True, null=True)  # Optional
+    is_anonymous = models.BooleanField(default=False)
+    reported_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.crime_type} reported at {self.location}"
+
 

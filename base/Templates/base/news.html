@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster News</title>
+    <style>/* styles.css */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00e676;
+            margin-bottom: 40px;
+        }
+        
+        .news-item {
+            background-color: #2c2c2c;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .news-item h2 {
+            color: #81c784;
+            margin-bottom: 10px;
+        }
+        
+        .news-item p {
+            line-height: 1.6;
+        }
+        
+        strong {
+            color: #64ffda;
+        }
+        
+        a {
+            color: #00e676;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Latest Disaster News & Updates</h1>
+        <div id="news-container">
+            <!-- News items will be injected here -->
+        </div>
+    </div>
+    <script>// news.js
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDisasterNews();
+        });
+        
+        function fetchDisasterNews() {
+            fetch('/fetch-news/')
+                .then(response => response.json())
+                .then(data => {
+                    const newsContainer = document.getElementById('news-container');
+                    newsContainer.innerHTML = '';  // Clear previous content
+        
+                    data.articles.forEach(article => {
+                        const newsItem = document.createElement('div');
+                        newsItem.classList.add('news-item');
+        
+                        newsItem.innerHTML = `
+                            <h2>${article.title}</h2>
+                            <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
+                            <p>${article.description}</p>
+                            <p><strong>Source:</strong> ${article.source}</p>
+                            <a href="${article.url}" target="_blank">Read more</a>
+                        `;
+        
+                        newsContainer.appendChild(newsItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching news:', error);
+                });
+        }
+        </script>
+</body>
+</html>

@@ -6,6 +6,11 @@ const CalamityResult = ({ isUnderCalamity, disasterType, description }) => {
       <h1>Calamity Result</h1>
       {isUnderCalamity ? (
         <div>
+          <h2>This Location is Safe</h2>
+          <p>There are currently no known calamities in your area.</p>
+        </div>
+      ) : (
+        <div>
           <h2>Warning! Natural Calamity Detected</h2>
           <p>
             <strong>Disaster Type:</strong> {disasterType}
@@ -13,11 +18,6 @@ const CalamityResult = ({ isUnderCalamity, disasterType, description }) => {
           <p>
             <strong>Description:</strong> {description}
           </p>
-        </div>
-      ) : (
-        <div>
-          <h2>This Location is Safe</h2>
-          <p>There are currently no known calamities in your area.</p>
         </div>
       )}
       <a
@@ -30,5 +30,4 @@ const CalamityResult = ({ isUnderCalamity, disasterType, description }) => {
     </div>
   );
 };
-
 export default CalamityResult;

@@ -70,3 +70,12 @@ class IncidentReportForm(forms.ModelForm):
                 'rows': 5, 'cols': 40
             }),
         }
+        
+# forms.py
+from django import forms
+from .models import CrimeReport
+
+class CrimeReportForm(forms.ModelForm):
+    class Meta:
+        model = CrimeReport
+        fields = ['crime_type', 'description', 'location', 'media', 'is_anonymous']
