@@ -2,7 +2,7 @@ import React from 'react'
 
 const Headings = ({heading}) => {
   return (
-    <div className='w-full h-20 font-bold text-lg text-black'>
+    <div className='w-full h-32 font-bold text-6xl text-black flex justify-center items-end'>
       <h1>{heading}</h1>
     </div>
   )
