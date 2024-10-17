@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Rotating Gradient Background</title>
   </head>
   <style>
     body {
@@ -11,12 +11,14 @@
       margin: 100px;
       padding: 100px;
     }
+
     .div {
       height: 140px;
       width: 140px;
       background-color: aqua;
       position: relative;
     }
+
     .bg {
       background: conic-gradient(
         from 0deg,
@@ -27,28 +29,25 @@
         green,
         blue,
         indigo,
-        violet
+        violet,
+        red
       );
-      animation: rotate 3s linear infinite ;
-      /* filter: blur(0.5); */
+      animation: rotate 3s linear infinite;
       height: 150px;
       width: 150px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 3px;
+      padding: 5px;
     }
 
     @keyframes rotate {
-        from{
-            --direction: 0deg;
-        }
-        to{
-            --direction: 360deg;
-        }
-    }
-    @property --direction{
-
+      from {
+        background-position: 0deg;
+      }
+      to {
+        background-position: 360deg;
+      }
     }
   </style>
   <body>
