@@ -31,3 +31,15 @@ class IncidentReportAdmin(admin.ModelAdmin):
 
 admin.site.register(IncidentReport, IncidentReportAdmin)
 
+
+# admin.py
+from django.contrib import admin
+from .models import CrimeReport
+
+class CrimeReportAdmin(admin.ModelAdmin):
+    list_display = ('crime_type', 'location', 'reported_at', 'is_anonymous')
+    list_filter = ('crime_type', 'reported_at', 'is_anonymous')
+    search_fields = ('crime_type', 'location', 'description')
+    ordering = ('-reported_at',)
+
+admin.site.register(CrimeReport, CrimeReportAdmin)

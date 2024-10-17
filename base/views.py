@@ -216,3 +216,45 @@ def hospital(request):
 
 def police(request):
     return render(request, 'base/police.html')
+
+# views.py
+from django.shortcuts import render, redirect
+from .forms import CrimeReportForm
+
+def report_crime(request):
+    if request.method == 'POST':
+        form = CrimeReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            return redirect('success')  # Redirect to a success page or another view
+    else:
+        form = CrimeReportForm()
+    
+    return render(request, 'base/crime_report.html', {'form': form})
+
+def success(request):
+    return render(request, 'base/success.html')
+
+# views.py
+import requests
+from django.http import JsonResponse
+
+def fetch_disaster_news(request):
+    api_key = '14bbbb4403364fe8ae900c0fafc4ad61'  # Replace with your API key
+    url = f'https://newsapi.org/v2/everything?q=disaster&apiKey={api_key}'
+    response = requests.get(url)
+    data = response.json()
+
+    articles = []
+    if response.status_code == 200:
+        for article in data['articles']:
+            articles.append({
+                'title': article['title'],
+                'description': article['description'],
+                'date': article['publishedAt'],
+                'source': article['source']['name'],
+                'url': article['url']
+            })
+    return JsonResponse({'articles': articles})
+
+
