@@ -9,6 +9,14 @@ import Panic_button from "./components/Panic_button";
 function App() {
   return (
     <>
+    <div class="video-background">
+        <video src="https://s2.ezgif.com/tmp/ezgif-2-534c969211.mp4" autoPlay muted loop></video>
+        
+    </div>
+
+    <div class="overlay">
+
+    
       <Navbar />
       <Panic_button />
       <Headings heading="Contacts" />
@@ -17,6 +25,8 @@ function App() {
       <Section bg="https://static.vecteezy.com/system/resources/previews/046/030/039/mp4/4k-sci-fi-tunnel-warp-motion-background-video.mp4" img1="" img2="" img3="" img4="" text1="Crime Report" text2="Wildlife Conservation" text3="Hazard Alert" text4="Disaster Recovery"/>
       <Headings heading="Information" />
       <Section bg="https://static.vecteezy.com/system/resources/previews/046/030/036/mp4/4k-starry-tunnel-motion-background-video.mp4" img1="" img2="" img3="" img4="" text1="Safety Tips" text2="Emergency Preparedness" text3="First Aid Tips" text4="DMC"/>
+
+      </div>
     </>
   );
 }
