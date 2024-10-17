@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rotating Gradient Background</title>
+  </head>
+  <style>
+    body {
+      background-color: black;
+      margin: 100px;
+      padding: 100px;
+    }
+
+    .div {
+      height: 140px;
+      width: 140px;
+      background-color: aqua;
+      position: relative;
+    }
+
+    .bg {
+      background: conic-gradient(
+        from 0deg,
+        transparent 70%,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet,
+        red
+      );
+      animation: rotate 3s linear infinite;
+      height: 150px;
+      width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+    }
+
+    @keyframes rotate {
+      from {
+        background-position: 0deg;
+      }
+      to {
+        background-position: 360deg;
+      }
+    }
+  </style>
+  <body>
+    <div class="bg">
+      <div class="div"></div>
+    </div>
+  </body>
+</html>
