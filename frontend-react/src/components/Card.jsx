@@ -9,7 +9,7 @@ const Card = ({img, text}) => {
         alt=""
       />
       <div className="flex justify-center items-center">
-        <p className="text-black">{text}</p>
+        <p className="text-white font-bold text-center">{text}</p>
       </div>
     </div>
   );
