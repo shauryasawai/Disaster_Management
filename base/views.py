@@ -187,7 +187,7 @@ def disaster_status_view(request):
         # Pass the result to calamity_result.html
         return render(request, 'base/calamity_result.html', result)
 
-    return render(request, 'disaster.html', {'error': 'Invalid request'})
+    return render(request, 'base/calamity_result.html', {'error': 'Invalid request'})
 
 
 # police/views.py
