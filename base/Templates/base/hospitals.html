@@ -28,22 +28,34 @@
       }
 
       .hospital-list {
-        display: flex;
-        flex-wrap: wrap; /* Allows wrapping to next row if there's not enough space */
-        justify-content: space-between; /* Adds space between the cards */
-        gap: 20px; /* Spacing between the cards */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Makes it 3 cards per row */
+        gap: 20px;
+        justify-items: center; /* Centers the cards horizontally */
+        align-items: stretch;
       }
 
       .hospital-card {
         background-color: #2e2e2e;
-        width: 350px; /* Fixed width */
-        height: 400px; /* Fixed height */
+        width: 100%;
+        max-width: 350px;
+        height: 400px;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
         display: flex;
-        flex-direction: column; /* Ensures content stacks vertically */
-        justify-content: space-between; /* Evenly spaces content within the card */
+        flex-direction: column;
+        justify-content: space-between;
+        opacity: 0;
+        transform: translateY(50px); /* Initial position for animation */
+        animation: fadeInUp 0.5s forwards ease-in-out;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0); /* Final position after animation */
+        }
       }
 
       .hospital-name {
@@ -53,7 +65,7 @@
 
       .hospital-details {
         display: flex;
-        flex-direction: column; /* Stack details vertically */
+        flex-direction: column;
         gap: 10px;
       }
 
@@ -62,7 +74,7 @@
         border-radius: 5px;
         color: #f0f0f0;
         padding: 10px;
-        text-align: center; /* Center text within each detail */
+        text-align: center;
       }
 
       .action-button {
@@ -108,7 +120,6 @@
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
-        // Use Nominatim API and limit the search to India using countrycodes=IN
         const url = `https://nominatim.openstreetmap.org/search?format=json&amenity=hospital&limit=10&lat=${lat}&lon=${lon}&countrycodes=IN`;
 
         fetch(url)
@@ -127,9 +138,10 @@
         loading.style.display = "none";
 
         if (hospitals.length > 0) {
-          hospitals.forEach((hospital) => {
+          hospitals.forEach((hospital, index) => {
             const hospitalCard = document.createElement("div");
             hospitalCard.classList.add("hospital-card");
+            hospitalCard.style.animationDelay = `${index * 0.1}s`; // Delay for animation
 
             const hospitalName = document.createElement("div");
             hospitalName.classList.add("hospital-name");
@@ -184,7 +196,7 @@
             Math.sin(dLon / 2) *
             Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c; // Distance in km
+        const distance = R * c;
         return distance.toFixed(2);
       }
 
