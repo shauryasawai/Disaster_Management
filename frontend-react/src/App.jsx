@@ -1,6 +1,8 @@
-import { useState } from "react";
 import "./App.css";
 import Navbar from "./components/navbar";
+import About from "./components/About";
+import Contact_Us from "./components/Contact_Us";
+import News from "./components/News"
 import Card from "./components/card";
 import Section from "./components/Section";
 import Headings from "./components/Headings";
@@ -8,19 +10,34 @@ import Panic_button from "./components/Panic_button";
 import MapComponent from "./components/MapComponent";
 import Footer from "./components/Footer";
 import SliderComponent from './components/SliderComponent';
-
+// import { createBrowserRouter } from "react-router-dom";
 
 function App() {
+  // const router = createBrowserRouter([
+  //   {
+  //     path: "/about",
+  //     element: <><Navbar/><About/></>
+  //   },
+  //   {
+  //     path: "/contactus",
+  //     element: <><Navbar/><Contact_Us/></>
+  //   },
+  //   {
+  //     path: "/news",
+  //     element: <><Navbar/><News/></>
+  //   }
+  // ])
   return (
     <>
+    {/* <RouterProvider router={router} /> */}
     <div class="video-background">
         <video src="/src/assets/bg_video.mp4" autoPlay muted loop></video>
-        
+        <SliderComponent />
     </div>
 
     <div class="overlay">
       <Navbar />
-      <SliderComponent />
+      
       <MapComponent />
       <Panic_button />
 
