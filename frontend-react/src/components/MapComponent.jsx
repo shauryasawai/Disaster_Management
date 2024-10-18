@@ -78,7 +78,7 @@ const MapComponent = () => {
   };
 
   return (
-    <div data-bs-theme="dark" className="my-60">
+    <div data-bs-theme="dark" className="my-10">
       {/* Coordinates Section */}
       <section id="coordinates" style={{ textAlign: "center", margin: "15px 0" }}>
         <h1 className="text-4xl">Your Coordinates</h1>

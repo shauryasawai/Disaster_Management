@@ -19,7 +19,8 @@ function App() {
     <div class="overlay">
       <Navbar />
       <Panic_button />
-      
+      <MapComponent />
+
       <Headings heading="Contacts" />
       <Section img1="https://tse3.mm.bing.net/th?id=OIP.y15e0sawGcT3ycy4nBpkEwHaHa&pid=Api&P=0&h=180" img2="" img3="https://tse4.mm.bing.net/th?id=OIP.T5tsaslsIK0004CrVJt_wAHaHa&pid=Api&P=0&h=180" img4="https://tse2.mm.bing.net/th?id=OIP.r8MAAiT41rK9WW8O_1jfPwHaHa&pid=Api&P=0&h=180" text1="Fire Rescue" text2="Suwa Seriya" text3="Hospital" text4="Police"/>
 
@@ -29,7 +30,6 @@ function App() {
       <Headings heading="Information" />
       <Section img1="" img2="" img3="" img4="" text1="Safety Tips" text2="Emergency Preparedness" text3="First Aid Tips" text4="DMC"/>
 
-      <MapComponent />
 
       <Footer />
       </div>
