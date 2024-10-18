@@ -102,7 +102,80 @@
         .icon-container a{
             text-decoration: none;
         }
+        .user-pic{
+            cursor: pointer;
+            margin-right: 20px;
 
+        }
+        .sub-menu-wrap{
+            position: absolute;
+            top: 100%;
+            right: 10%;
+            width: 320px;
+            max-height: 0px;
+            overflow: hidden;
+            transition: max-height 0.5s;
+
+
+
+        }
+        .sub-menu-wrap.open-menu{
+            max-height: 400px
+        }
+        .sub-menu{
+            background: black;
+            padding: 20px;
+            margin: 10px;
+        }
+        .user-info{
+            display: flex;
+            align-items: center;
+
+        }
+        .user-info h3{
+             font-weight: 500;
+
+        }
+        .user-info img{
+            width: 60px;
+            margin-right: 15px;
+            border-radius: 50%;
+
+        }
+        .sub-menu hr{
+            border: 0;
+            height: 1px;
+            width: 100%;
+            background-color: #ccc;
+            margin: 15px 0 10px;
+        }
+        .sub-menu-link{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            margin: 12px 0;
+
+        }
+        .sub-menu-link p{
+            width: 100%;
+
+        }
+        .sub-menu-link img{
+            width: 40px;
+            border-radius: 50%;
+            padding: 8px;
+            margin-right:15px ;
+
+        }
+        .sub-menu-link span{
+            font-size: 22px;
+            transition: transform 0.5s;
+
+        }
+        .sub-menu-link:hover span{
+            transform:translate(5px)
+        }
 
     </style>
 
@@ -221,13 +294,19 @@
                       break;
               }
           }
+
+        //   let subMenu=document.getElementById("subMenu");
+        //   function toggleMenu(){
+        //     subMenu.classList.toggle("open-menu");
+        //   }
+          
       </script>
   </head>
   <body data-bs-theme="dark">
      <!-- navbar section -->
-     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="background-color: #0a471d;">
+     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top hero" style="background-color: #0a471d;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#" style="margin-left: 30px"><span class="text-danger">Disaster</span>Management</a>
+          <a class="navbar-brand" href="#" style="margin-left: 100px"><span class="text-danger">Disaster</span>Management</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -250,6 +329,38 @@
               </li>
               <li class="nav-item">
                 <span class="btn btn-success" style="margin-left: 10px;">Register</span>
+              </li>
+              <li>
+                <img src="img/profile.png" alt="" class="user-pic" style="height: 40px; margin-left:10px; margin-right: 150px;" onclick="toggleMenu()">
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="img/profile.png" alt="" style="height: 40px; margin-left: 30px;">
+                            <h3>User Name</h3>
+                        </div>
+                        <hr>
+                        <a href="#" class="sub-menu-link">
+                            <img src="img/profilesmall.png" alt="">
+                            <p>Edit Profile</p>
+                            <span>></span>
+                        </a>
+                        <a href="#" class="sub-menu-link">
+                            <img src="img/setting.png" alt="">
+                            <p>Settings & Privacy</p>
+                            <span>></span>
+                        </a>
+                        <a href="#" class="sub-menu-link">
+                            <img src="img/help.png" alt="">
+                            <p>Help & Support</p>
+                            <span>></span>
+                        </a>
+                        <a href="#" class="sub-menu-link">
+                            <img src="img/logout.png" alt="">
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
+                    </div>
+                </div>
               </li>
 
             </ul>
@@ -377,6 +488,12 @@
 <section id="location-section">
     <div id="map"></div>
 </section>
+<script>
+     let subMenu=document.getElementById("subMenu");
+          function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+          }
+</script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
