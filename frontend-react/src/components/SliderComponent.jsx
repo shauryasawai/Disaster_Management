@@ -4,7 +4,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';  // Import Bootstrap's JS for i
 
 const SliderComponent = () => {
   return (
-    <div id="carouselExampleCaptions" className="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div id="carouselExampleCaptions" className=" h-full w-full flex justify-center items-center carousel slide carousel-fade" data-bs-ride="carousel">
+      <div className='h-[60%] w-[70%]'>
       <div className="carousel-indicators">
         <button
           type="button"
@@ -36,9 +37,6 @@ const SliderComponent = () => {
           />
           <div className="carousel-caption d-none d-md-block">
             <h5 style={{ color: 'white' }}>Earthquake</h5>
-            <p style={{ color: 'white' }}>
-              Some representative placeholder content for the first slide.
-            </p>
             <p>
               <a href="#" className="btn btn-danger mt-3">
                 Learn More
@@ -54,7 +52,6 @@ const SliderComponent = () => {
           />
           <div className="carousel-caption d-none d-md-block">
             <h5>Flood</h5>
-            <p>Some representative placeholder content for the second slide.</p>
             <p>
               <a href="#" className="btn btn-danger mt-3">
                 Learn More
@@ -70,9 +67,6 @@ const SliderComponent = () => {
           />
           <div className="carousel-caption d-none d-md-block">
             <h5 style={{ color: 'white' }}>Fire</h5>
-            <p style={{ color: 'white' }}>
-              Some representative placeholder content for the third slide.
-            </p>
             <p>
               <a href="#" className="btn btn-danger mt-3">
                 Learn More
@@ -99,6 +93,7 @@ const SliderComponent = () => {
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Next</span>
       </button>
+    </div>
     </div>
   );
 };
