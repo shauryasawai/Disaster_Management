@@ -240,7 +240,7 @@ import requests
 from django.http import JsonResponse
 
 def fetch_disaster_news(request):
-    api_key = '14bbbb4403364fe8ae900c0fafc4ad61'  # Replace with your API key
+    api_key = '14bbbb4403364fe8ae900c0fafc4ad61'
     url = f'https://newsapi.org/v2/everything?q=disaster&apiKey={api_key}'
     response = requests.get(url)
     data = response.json()
