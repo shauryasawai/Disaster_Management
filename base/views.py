@@ -88,7 +88,7 @@ def create_profile(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            return redirect('dashboard')  # Redirect to the dashboard view
+            return redirect('dashboard')
     else:
         form = UserProfileForm()
     return render(request, 'base/create_profile.html', {'form': form})
@@ -100,9 +100,9 @@ def register(request):
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
             user = user_form.save()
-            UserProfile.objects.create(user=user)  # Create UserProfile after saving User
-            login(request, user)  # Log the user in after registration
-            return redirect('home')  
+            UserProfile.objects.create(user=user)  
+            login(request, user) 
+            return redirect('create_profile')  
     else:
         user_form = UserRegistrationForm()
 
