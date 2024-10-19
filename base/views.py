@@ -19,9 +19,10 @@ from django.contrib.auth import login,authenticate
 load_dotenv()
 API_KEY = os.getenv('POSITIONSTACK_API_KEY')
 # Your API key from PositionStack
+@login_required
 def home(request):
     return render(request, 'base/home.html')
-
+@login_required
 def save_location(request):
     if request.method == 'POST':
         latitude = request.POST.get('latitude')
@@ -52,6 +53,7 @@ def save_location(request):
     # If no POST data, just render the home page without location
     return render(request, 'base/home.html')
 
+@login_required
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -76,6 +78,7 @@ def login_view(request):
             messages.error(request, 'Invalid username or password.')
     return render(request, 'base/login.html')
 
+@login_required
 def profile_view(request):
     user = request.user.userprofile  
     return render(request, 'base/profile.html', {'user': user})
@@ -126,10 +129,9 @@ def dashboard(request):
     
     return render(request, 'base/dashboard.html', {'form': form, 'profile': profile})
 
-
 # ReliefWeb API URL for disasters
 RELIEFWEB_API_URL = 'https://api.reliefweb.int/v1/disasters'
-
+@login_required
 # Function to check if a location is under a natural calamity using ReliefWeb API
 def check_disaster(latitude, longitude):
     # Set parameters for ReliefWeb API request to get recent disasters
@@ -166,7 +168,7 @@ def check_disaster(latitude, longitude):
 
 # Helper function to calculate the distance between two lat/lon points (using Haversine formula)
 import math
-
+@login_required
 def is_within_radius(lat1, lon1, lat2, lon2, radius_km):
     # Calculate the distance between two lat/lon points
     coords_1 = (lat1, lon1)
@@ -176,6 +178,7 @@ def is_within_radius(lat1, lon1, lat2, lon2, radius_km):
 
 # Django view to handle the incoming POST request with coordinates
 @csrf_exempt
+@login_required
 def disaster_status_view(request):
     if request.method == 'POST':
         latitude = float(request.POST.get('latitude'))
@@ -193,7 +196,7 @@ def disaster_status_view(request):
 # police/views.py
 from django.shortcuts import render, redirect
 from .forms import IncidentReportForm
-
+@login_required
 def report_incident(request):
     if request.method == 'POST':
         form = IncidentReportForm(request.POST, request.FILES)
@@ -204,23 +207,20 @@ def report_incident(request):
         form = IncidentReportForm()
     
     return render(request, 'base/police.html', {'form': form})
-
-
- 
-   
+@login_required
 def fire_view(request):
     return render(request, 'base/fire_safety.html')
-
+@login_required
 def hospital(request):
     return render(request, 'base/hospitals.html')
-
+@login_required
 def police(request):
     return render(request, 'base/police.html')
 
 # views.py
 from django.shortcuts import render, redirect
 from .forms import CrimeReportForm
-
+@login_required
 def report_crime(request):
     if request.method == 'POST':
         form = CrimeReportForm(request.POST, request.FILES)
@@ -231,14 +231,14 @@ def report_crime(request):
         form = CrimeReportForm()
     
     return render(request, 'base/crime_report.html', {'form': form})
-
+@login_required
 def success(request):
     return render(request, 'base/success.html')
 
 # views.py
 import requests
 from django.http import JsonResponse
-
+@login_required
 def fetch_disaster_news(request):
     api_key = '14bbbb4403364fe8ae900c0fafc4ad61'
     url = f'https://newsapi.org/v2/everything?q=disaster&apiKey={api_key}'
@@ -256,11 +256,13 @@ def fetch_disaster_news(request):
                 'url': article['url']
             })
     return JsonResponse({'articles': articles})
-
+@login_required
 def wildlife(request):
     return render(request, 'base/wildlife.html')
+@login_required
 def disaster_recovery(request):
     return render(request, 'base/disaster_recovery.html')
+@login_required
 def hazard(request):
     return render(request, 'base/hazard.html')
 
