@@ -3,19 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Profile Dashboard</title>
+    <style>
+        /* Dark theme background and text colors */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 900px;
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1, h2 {
+            color: #ff9800;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: 18px;
+            padding: 10px 0;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        a.btn-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff9800;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        a.btn-primary:hover {
+            background-color: #f57c00;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Profile Dashboard</h1>
-
-        {% comment %} <!-- Profile Information Form -->
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="update-btn">Update Profile</button>
-        </form> {% endcomment %}
-
         <h2>Your Information</h2>
         <ul>
             <li><strong>Username:</strong> {{ profile.user.username }}</li>
@@ -27,9 +103,7 @@
             <li><strong>Weight:</strong> {{ profile.weight }} kg</li>
             <li><strong>Allergies/Reactions:</strong> {{ profile.allergies_reactions }}</li>
             <li><strong>Past Injuries/Operations:</strong> {{ profile.past_injuries_operations }}</li>
-            <br>
-            <br>
-            <br>
+            <br><br>
             <a href="{% url 'create_profile' %}" class="btn btn-primary">Edit Your Profile</a>
         </ul>
     </div>
