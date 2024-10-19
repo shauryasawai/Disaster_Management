@@ -9,7 +9,11 @@ const Navbar = () => {
           <a href="/"><li className="list-none hover:cursor-pointer hover:text-green-600">
             Home
           </li></a>
+<<<<<<< HEAD
           <a href="http://127.0.0.1:5501/base/Templates/base/about_us.html"><li className="list-none hover:cursor-pointer hover:text-green-600">
+=======
+          <a href="http://127.0.0.1:3000/base/Templates/base/about_us.html"><li className="list-none hover:cursor-pointer hover:text-green-600">
+>>>>>>> 5709be600a5791d2ad78e8b438a74d5d5fbcce8b
             About Us
           </li></a>
           <a href="http://127.0.0.1:5501/base/Templates/base/contact_us.html"><li className="list-none hover:cursor-pointer hover:text-green-600">
