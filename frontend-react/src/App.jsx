@@ -10,23 +10,9 @@ import Panic_button from "./components/Panic_button";
 import MapComponent from "./components/MapComponent";
 import Footer from "./components/Footer";
 import SliderComponent from "./components/SliderComponent";
-// import { createBrowserRouter } from "react-router-dom";
 
 function App() {
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/about",
-  //     element: <><Navbar/><About/></>
-  //   },
-  //   {
-  //     path: "/contactus",
-  //     element: <><Navbar/><Contact_Us/></>
-  //   },
-  //   {
-  //     path: "/news",
-  //     element: <><Navbar/><News/></>
-  //   }
-  // ])
+  
   return (
     <>
       {/* <RouterProvider router={router} /> */}
