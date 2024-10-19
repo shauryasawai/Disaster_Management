@@ -1,9 +1,5 @@
 import "./App.css";
 import Navbar from "./components/navbar";
-import About from "./components/About";
-import Contact_Us from "./components/Contact_Us";
-import News from "./components/News";
-import Card from "./components/card";
 import Section from "./components/Section";
 import Headings from "./components/Headings";
 import Panic_button from "./components/Panic_button";
@@ -12,12 +8,10 @@ import Footer from "./components/Footer";
 import SliderComponent from "./components/SliderComponent";
 
 function App() {
-  
   return (
     <>
-      {/* <RouterProvider router={router} /> */}
       <div class="video-background">
-        <video src="/src/assets/bg_video.mp4" autoPlay muted loop></video>
+        <video src="./base/Templates/base/img/bg_video.mp4" autoPlay muted loop></video>
       </div>
 
       <div class="overlay">
@@ -29,10 +23,10 @@ function App() {
 
         <Headings heading="Contacts" />
         <Section
-        link1="http://127.0.0.1:5501/base/Templates/base/fire_safety.html"
-        link2="http://127.0.0.1:8000/fetch-news/"
-        link3="http://127.0.0.1:8000/hospital/"
-        link4="http://127.0.0.1:8000/report/"
+        link1=""
+        link2=""
+        link3=""
+        link4=""
           img1="https://tse3.mm.bing.net/th?id=OIP.y15e0sawGcT3ycy4nBpkEwHaHa&pid=Api&P=0&h=180"
           img2="https://tse2.mm.bing.net/th?id=OIP.EjAL2jn03BXr8OOlqUFm7gHaEK&pid=Api&P=0&h=180"
           img3="https://tse4.mm.bing.net/th?id=OIP.T5tsaslsIK0004CrVJt_wAHaHa&pid=Api&P=0&h=180"
