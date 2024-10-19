@@ -88,7 +88,7 @@ const MapComponent = () => {
 
       {/* Map Section */}
       <section id="location-section" className="flex justify-center items-center">
-        <div id="map" style={{ height: "700px", width: "80%" }}></div>
+        <div id="map" style={{ height: "500px", width: "60%" }}></div>
       </section>
     </div>
   );

@@ -31,8 +31,8 @@ class UserProfile(models.Model):
     contact_no = models.CharField(max_length=15, null=True)
     emergency_contact_no = models.CharField(max_length=15, null=True)
     blood_group = models.CharField(max_length=5)
-    height = models.DecimalField(max_digits=5, decimal_places=2)
-    weight = models.DecimalField(max_digits=5, decimal_places=2)
+    height = models.FloatField(null=True, blank=True)
+    weight = models.DecimalField(max_digits=5, decimal_places=2,null=True, blank=True)
     allergies_reactions = models.TextField(blank=True, null=True)  # Correct field name
     past_injuries_operations = models.TextField(blank=True, null=True)  # Correct field name
 
