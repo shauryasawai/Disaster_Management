@@ -71,7 +71,7 @@ def login_view(request):
             print("User authenticated:", user)
             print("Session username after login:", request.session.get('username'))
             
-            return redirect('home/') 
+            return redirect('http://localhost:5173/') 
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'base/login.html')
@@ -88,7 +88,7 @@ def create_profile(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            return redirect('dashboard')
+            return redirect('http://localhost:5173/')
     else:
         form = UserProfileForm()
     return render(request, 'base/create_profile.html', {'form': form})

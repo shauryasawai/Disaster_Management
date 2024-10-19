@@ -30,9 +30,9 @@ function App() {
         <Headings heading="Contacts" />
         <Section
         link1="http://127.0.0.1:5501/base/Templates/base/fire_safety.html"
-        link2=""
-        link3="http://127.0.0.1:5501/base/Templates/base/hospitals.html"
-        link4=""
+        link2="http://127.0.0.1:8000/fetch-news/"
+        link3="http://127.0.0.1:8000/hospital/"
+        link4="http://127.0.0.1:8000/report/"
           img1="https://tse3.mm.bing.net/th?id=OIP.y15e0sawGcT3ycy4nBpkEwHaHa&pid=Api&P=0&h=180"
           img2="https://tse2.mm.bing.net/th?id=OIP.EjAL2jn03BXr8OOlqUFm7gHaEK&pid=Api&P=0&h=180"
           img3="https://tse4.mm.bing.net/th?id=OIP.T5tsaslsIK0004CrVJt_wAHaHa&pid=Api&P=0&h=180"
@@ -45,10 +45,10 @@ function App() {
 
         <Headings heading="Services" />
         <Section
-        link1="http://127.0.0.1:5501/base/Templates/base/crime_report.html"
-        link2=""
-        link3=""
-        link4=""
+        link1="http://127.0.0.1:8000/report-crime/"
+        link2="http://127.0.0.1:8000/wildlife/"
+        link3="http://127.0.0.1:8000/hazard/"
+        link4="http://127.0.0.1:8000/disaster_recovery/"
           img1="https://tse1.mm.bing.net/th?id=OIP.jhd3PE403n3R_Ohm9S_noAHaE2&pid=Api&P=0&h=180"
           img2="https://tse1.mm.bing.net/th?id=OIP.I7zYkFxUQLSBelgIhcTsPwHaEo&pid=Api&P=0&h=180"
           img3="https://tse2.mm.bing.net/th?id=OIP.9wauuU56-IpVuHYd0gJ2XwHaHa&pid=Api&P=0&h=180"
