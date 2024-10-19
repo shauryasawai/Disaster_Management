@@ -15,8 +15,7 @@ const Navbar = () => {
           <Link to="/contactus"><li className="list-none hover:cursor-pointer hover:text-green-600">
             Contact Us
           </li></Link>
-          <Link to="/news"><li className="list-none hover:cursor-pointer hover:text-green-600">
-            News
+          <Link to="/news"><li className="list-none hover:cursor-pointer hover:text-green-600">News
           </li></Link>
         </ul>
       </div>

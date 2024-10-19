@@ -257,4 +257,11 @@ def fetch_disaster_news(request):
             })
     return JsonResponse({'articles': articles})
 
+def wildlife(request):
+    return render(request, 'base/wildlife.html')
+def disaster_recovery(request):
+    return render(request, 'base/disaster_recovery.html')
+def hazard(request):
+    return render(request, 'base/hazard.html')
+
 
