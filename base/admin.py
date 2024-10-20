@@ -43,3 +43,13 @@ class CrimeReportAdmin(admin.ModelAdmin):
     ordering = ('-reported_at',)
 
 admin.site.register(CrimeReport, CrimeReportAdmin)
+
+# admin.py
+from django.contrib import admin
+from .models import Contact
+
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'message')  # Columns to display
+    search_fields = ('name', 'email')  # Add search functionality for name and email
+
+admin.site.register(Contact, ContactAdmin)

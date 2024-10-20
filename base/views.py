@@ -18,8 +18,10 @@ from django.contrib.auth import login,authenticate
 
 load_dotenv()
 API_KEY = os.getenv('POSITIONSTACK_API_KEY')
+@login_required
 def home(request):
     return render(request, 'base/home.html')
+@login_required
 def save_location(request):
     if request.method == 'POST':
         latitude = request.POST.get('latitude')
@@ -69,7 +71,7 @@ def login_view(request):
             print("User authenticated:", user)
             print("Session username after login:", request.session.get('username'))
             
-            return redirect('http://localhost:5173/') 
+            return redirect('/home') 
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'base/login.html')
@@ -125,6 +127,7 @@ def dashboard(request):
 # ReliefWeb API URL for disasters
 RELIEFWEB_API_URL = 'https://api.reliefweb.int/v1/disasters'
 # Function to check if a location is under a natural calamity using ReliefWeb API
+@login_required
 def check_disaster(latitude, longitude):
     # Set parameters for ReliefWeb API request to get recent disasters
     params = {
@@ -160,6 +163,7 @@ def check_disaster(latitude, longitude):
 
 # Helper function to calculate the distance between two lat/lon points (using Haversine formula)
 import math
+@login_required
 def is_within_radius(lat1, lon1, lat2, lon2, radius_km):
     # Calculate the distance between two lat/lon points
     coords_1 = (lat1, lon1)
@@ -169,6 +173,7 @@ def is_within_radius(lat1, lon1, lat2, lon2, radius_km):
 
 # Django view to handle the incoming POST request with coordinates
 @csrf_exempt
+@login_required
 def disaster_status_view(request):
     if request.method == 'POST':
         latitude = float(request.POST.get('latitude'))
@@ -186,6 +191,7 @@ def disaster_status_view(request):
 # police/views.py
 from django.shortcuts import render, redirect
 from .forms import IncidentReportForm
+@login_required
 def report_incident(request):
     if request.method == 'POST':
         form = IncidentReportForm(request.POST, request.FILES)
@@ -196,17 +202,20 @@ def report_incident(request):
         form = IncidentReportForm()
     
     return render(request, 'base/police.html', {'form': form})
+@login_required
 def fire_view(request):
     return render(request, 'base/fire_safety.html')
 
 def hospital(request):
     return render(request, 'base/hospitals.html')
+@login_required
 def police(request):
     return render(request, 'base/police.html')
 
 # views.py
 from django.shortcuts import render, redirect
 from .forms import CrimeReportForm
+@login_required
 def report_crime(request):
     if request.method == 'POST':
         form = CrimeReportForm(request.POST, request.FILES)
@@ -217,6 +226,7 @@ def report_crime(request):
         form = CrimeReportForm()
     
     return render(request, 'base/crime_report.html', {'form': form})
+@login_required
 def success(request):
     return render(request, 'base/success.html')
 
@@ -224,6 +234,7 @@ def success(request):
 import requests
 from django.http import JsonResponse
 API = os.getenv('api_key')
+@login_required
 def fetch_disaster_news(request):
     
     url = f'https://newsapi.org/v2/everything?q=disaster&apiKey={API}'
@@ -241,11 +252,60 @@ def fetch_disaster_news(request):
                 'url': article['url']
             })
     return JsonResponse({'articles': articles})
+@login_required
 def wildlife(request):
     return render(request, 'base/wildlife.html')
+@login_required
 def disaster_recovery(request):
     return render(request, 'base/disaster_recovery.html')
+@login_required
 def hazard(request):
     return render(request, 'base/hazard.html')
+@login_required
+def about_us(request):
+    return render(request, 'base/about_us.html')
+@login_required
+def contact(request):
+    return render(request, 'base/contact_us.html')
+@login_required
+def ml(request):
+    return render(request, 'base/Smart_India_Hack.html')
+@login_required
+def prepareness(request):
+    return render(request, 'base/emergency.html')
+@login_required
+def aid(request):
+    return render(request, 'base/first_aid_tips.html')
+@login_required
+def NDRF(request):
+    return render(request, 'base/NDRF.html')
+@login_required
+def first_aid_tips(request):
+    return render(request, 'base/first_aid_tips.html')
+
+# views.py
+from django.shortcuts import render, redirect
+from .forms import ContactForm
+
+# views.py
+from django.shortcuts import render
+from .forms import ContactForm
+
+# views.py
+from django.shortcuts import render
+from .forms import ContactForm
+@login_required
+def contact_view(request):
+    success_message = ""
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success_message = "Form has been submitted successfully!"
+            form = ContactForm()  # Clear the form after submission (refresh)
+    else:
+        form = ContactForm()
+    
+    return render(request, 'base/contact_us.html', {'form': form, 'success_message': success_message})
 
 

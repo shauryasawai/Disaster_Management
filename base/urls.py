@@ -4,7 +4,7 @@ from .views import disaster_status_view
 from .views import fire_view,hospital
 from .views import report_incident
 from .views import report_crime, success
-from .views import fetch_disaster_news,wildlife,disaster_recovery,hazard
+from .views import fetch_disaster_news,wildlife,disaster_recovery,hazard,about_us,contact,ml,prepareness,aid,NDRF,first_aid_tips
 
 
 urlpatterns = [
@@ -24,4 +24,14 @@ urlpatterns = [
     path('wildlife/', wildlife, name='wildlife'),
     path('disaster_recovery/', disaster_recovery, name='disaster_recovery'),
     path('hazard/', hazard, name='hazard'),
+    path('about_us/', about_us, name='about_us'),
+    path('ml/', ml, name='ml'),
+    path('emergency/', prepareness, name='emergency'),
+    path('aid/', aid, name='aid'),
+    path('ndrf/', NDRF, name='ndrf'),
+    path('first_aid_tips/', first_aid_tips, name='first_aid_tips'),
+    path('contact/', views.contact_view, name='contact'),
+
+
+    
 ]

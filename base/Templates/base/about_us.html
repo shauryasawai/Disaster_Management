@@ -42,6 +42,11 @@
             background-color: #1b5e20;
             color: #e0e0e0;
         }
+        .img-fluid{
+            length: 300px;
+            width: 300px;
+            margin-left: 160px
+        }
     </style>
 </head>
 <body>
@@ -60,10 +65,22 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="feature-title">Overview</h2>
-                    <p>The Disaster Management Web App is designed to provide real-time assistance during natural disasters by integrating data from various sources, including the OCHA (United Nations Office for the Coordination of Humanitarian Affairs) database and satellite imagery.</p>
+                    <p>User's exact location (latitude and longitude coordinates) is automatically fetched and displayed on a map.
+Panic Button is available on the home page, providing real-time assistance during disasters by integrating data from multiple sources, including:
+OCHA (United Nations Office for the Coordination of Humanitarian Affairs) database.
+Satellite imagery for real-time hazard updates.
+The system navigates the user to the safest path using trained ML models (GNNs, A*, and U-Net algorithms) for image processing and pathfinding.
+Assistance Features:
+
+Quick access to Police, Fire, and Ambulance services.
+Resource information about these emergency services (e.g., contact details, nearest stations).
+Incident Reporting:
+
+Every page includes an option to report incidents.
+Users can report incidents anonymously, such as accidents, fires, or hazards.</p>
                 </div>
                 <div class="col-md-6">
-                    <img src="https://via.placeholder.com/500" alt="Disaster Management" class="img-fluid">
+                    <img src="https://images.fineartamerica.com/images-medium-large-5/1-sos-button-ktsdesignscience-photo-library.jpg" alt="Disaster Management" class="img-fluid">
                 </div>
             </div>
 
