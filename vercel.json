@@ -19,7 +19,14 @@
             "config": {
                 "distDir": "staticfiles_build"
             }
-        }
+        },
+        {
+            "src": "manage.py",
+            "use": "@vercel/python",
+            "config": {
+              "buildCommand": "python manage.py collectstatic --noinput"
+            }
+          }
     ],
     "routes": [
         {
@@ -29,6 +36,10 @@
         {
             "src": "/(.*)",
             "dest": "project/wsgi.py"
-        }
+        },
+        {
+            "src": "/(.*)",
+            "dest": "manage.py"
+          }
     ]
 }
