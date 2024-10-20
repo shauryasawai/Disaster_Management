@@ -1,2 +1,5 @@
+/base/__pycache__
+*.py[cod]
 .env
-\land\settings.py
+/land/settings.py
+/myenv
