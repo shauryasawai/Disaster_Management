@@ -12,34 +12,23 @@
             "config": {
               "distDir": "build"
             }
-          },
+        },
         {
             "src": "build_files.sh",
             "use": "@vercel/static-build",
             "config": {
                 "distDir": "staticfiles_build"
             }
-        },
-        {
-            "src": "manage.py",
-            "use": "@vercel/python",
-            "config": {
-              "buildCommand": "python manage.py collectstatic --noinput --verbosity 0"
-            }
-          }
+        }
     ],
     "routes": [
         {
-            "src": "/media/(.*)",
-            "dest": "/media/$1"
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
         },
         {
             "src": "/(.*)",
             "dest": "project/wsgi.py"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "manage.py"
-          }
+        }
     ]
 }
