@@ -15,7 +15,5 @@ cd ..
 # Add your Django project files to the zip
 zip -r9 function.zip .
 
-# Run Django collectstatic command (optional: include this if needed)
-python3.9 manage.py collectstatic --noinput --clear
 
 echo "BUILD END"
