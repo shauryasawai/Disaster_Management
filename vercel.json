@@ -24,7 +24,7 @@
             "src": "manage.py",
             "use": "@vercel/python",
             "config": {
-              "buildCommand": "python manage.py collectstatic --noinput"
+              "buildCommand": "python manage.py collectstatic --noinput --verbosity 0"
             }
           }
     ],

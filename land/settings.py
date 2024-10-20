@@ -169,13 +169,13 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'level': 'ERROR',  # Reduce logging level to ERROR or higher
+            'level': 'ERROR',  # Logs only errors
             'class': 'logging.StreamHandler',
         },
     },
     'root': {
         'handlers': ['console'],
-        'level': 'ERROR',  # Only log errors, not warnings or debug info
+        'level': 'ERROR',
     },
 }
 
