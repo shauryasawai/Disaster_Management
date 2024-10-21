@@ -59,3 +59,81 @@ Contributions are welcome! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) fo
 
 **Developed by**  
 Hounds of Justice
+
+---
+
+
+Below are the setup instructions for running both a Django backend and a React frontend for the project.
+
+---
+
+
+Prerequisites
+
+---
+
+Python (3.8 or higher)
+Node.js (with npm)
+PostgreSQL (or any other database you're using)
+
+---
+
+Backend: Setting Up Django Server
+
+---
+
+
+# Step 1: Clone the repository
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
+
+# Step 2: Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+# Step 3: Install required packages
+pip install -r requirements.txt
+
+# Step 4: Configure your database
+# In your Django project settings (usually in `settings.py`), configure the database connection
+# Example for PostgreSQL:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': 'your_db_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+# Step 5: Run migrations
+python manage.py migrate
+
+# Step 6: Create a superuser (for accessing the Django admin)
+python manage.py createsuperuser
+
+# Step 7: Start the Django development server
+python manage.py runserver
+
+# The Django server will be running at http://127.0.0.1:8000/
+
+---
+
+Frontend: Setting Up React Server
+
+---
+
+# Step 1: Navigate to the frontend directory
+cd frontend-react
+
+# Step 2: Install required packages
+npm install
+
+# Step 3: Start the React development server
+npm start
+
+# The React server will be running at http://localhost:3000/
+
+---
