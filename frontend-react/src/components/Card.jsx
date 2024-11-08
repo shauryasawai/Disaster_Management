@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = ({ img, text }) => {
   return (
-    <div className="bg-orange text-white my-6 rounded-2xl">
+    <div className="bg-black text-white my-6 rounded-2xl">
       <img
         className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 border-2 border-purple-300 rounded-2xl mx-auto"
         src={img}
