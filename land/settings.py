@@ -74,38 +74,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'land.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-import os
-import dj_database_url
-from django.core.exceptions import ImproperlyConfigured
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Retrieve the DATABASE_URL from environment variables
-DATABASE_URL = os.getenv('DATABASE_URL')
-
-# Ensure the DATABASE_URL exists
-if not DATABASE_URL:
-    raise ImproperlyConfigured("The DATABASE_URL environment variable is not set.") 
-
 # Configure the default database using dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 # Password validation
